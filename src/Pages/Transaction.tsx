@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import data from "../data.json";
-import TransactionInput from "../Components/TransactionInput";
-import TransactionTable from "../Components/TransactionTable";
-import TransactionPagination from "../Components/TransactionPagination";
+import TransactionInput from "../Components/Transaction/TransactionInput";
+import TransactionTable from "../Components/Transaction/TransactionTable";
+import TransactionPagination from "../Components/Transaction/TransactionPagination";
 
 function Transaction() {
   const [selectedSort, setSelectedSort] = useState("Latest");
+  const [input, setInput] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Transaction");
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -28,23 +29,14 @@ function Transaction() {
 
   const pageSize = 10;
 
-  //Kaçıncı veriden başlayacağını seçelim:slice(start,end)
-  // let paginatedData = data.transactions.slice(
-  //   (currentPage - 1) * pageSize,
-  //   currentPage * pageSize
-  // );
-  //Category'e göre filtreleme işlemi:
-  // const filteredData = data.transactions.filter((item) => {
-  //   if (selectedCategory === "All Transaction") {
-  //     return true;
-  //   }
-  //   return item.category === selectedCategory;
-  // });
+  let filteredCategory = data.transactions.filter((item) => {
+    if (selectedCategory === "All Transaction") {
+      return true;
+    }
+    return item.category === selectedCategory;
+  });
 
-  // const displayData =
-  //   selectedCategory === "All Transaction" ? paginatedData : filteredData;
-
-  let sortedData = [...data.transactions].sort((a, b) => {
+  let sortedData = [...filteredCategory].sort((a, b) => {
     switch (selectedSort) {
       case "Latest":
         return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -62,33 +54,30 @@ function Transaction() {
         return 0;
     }
   });
-  console.log("sorrtedData sıralanması:", sortedData);
-  sortedData = data.transactions.filter((item) => {
-    if (selectedCategory === "All Transaction") {
-      return true;
-    }
-    return item.category === selectedCategory;
-  });
 
-  const pages: number = Math.ceil(sortedData.length / pageSize);
+  const filteredData = sortedData.filter((item) =>
+    item.name.toLowerCase().includes(input.toLowerCase())
+  );
+
+  const pages: number = Math.ceil(filteredData.length / pageSize);
   const pageNumbers = Array.from({ length: pages }, (_, i) => i + 1);
 
-  console.log("pages", pages);
-
-  console.log("sorrtedData filtreleme:", sortedData);
+  console.log(pages);
+  console.log(input.length);
+  console.log("filteredData", filteredData);
 
   sortedData = sortedData.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
 
-  console.log("SortedData pagination:", sortedData);
-
   return (
-    <div className="w-screen h-screen px-10 py-8 bg-[#F8F4F0] flex flex-col gap-8">
+    <div className="w-screen h-screen px-10 py-8 bg-[#F8F4F0] flex flex-col gap-8 ">
       <p className="text-1">Transaction</p>
-      <div className="w-full h-full bg-white border border-white rounded-[12px] flex flex-col p-8 gap-8 ">
+      <div className="w-full h-full bg-white border border-white rounded-[12px] flex flex-col p-8 gap-8 box-border ">
         <TransactionInput
+          input={input}
+          setInput={setInput}
           isSortOpen={isSortOpen}
           setIsSortOpen={setIsSortOpen}
           isCategoryOpen={isCategoryOpen}
@@ -101,7 +90,11 @@ function Transaction() {
           category={category}
         />
 
-        <TransactionTable sortedData={sortedData} />
+        <TransactionTable
+          sortedData={sortedData}
+          filteredData={filteredData}
+          input={input}
+        />
         <TransactionPagination
           setCurrentPage={setCurrentPage}
           pageNumbers={pageNumbers}

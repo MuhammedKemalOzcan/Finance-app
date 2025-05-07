@@ -11,6 +11,8 @@ interface TransactionInputProps {
   selectedCategory: string;
   sort: string[];
   category: string[];
+  input: string;
+  setInput: (value: string) => void;
 }
 
 const TransactionInput: React.FC<TransactionInputProps> = ({
@@ -24,6 +26,8 @@ const TransactionInput: React.FC<TransactionInputProps> = ({
   selectedCategory,
   sort,
   category,
+  input,
+  setInput,
 }) => {
   const handleSort = (selectedSort: string) => {
     setSelectedSort(selectedSort);
@@ -34,17 +38,19 @@ const TransactionInput: React.FC<TransactionInputProps> = ({
     setIsCategoryOpen(false);
   };
   return (
-    <div className="flex justify-between gap-40">
+    <div className="flex justify-between ">
       <input
         type="text"
         className="border flex gap-4 px-4 py-3 rounded-[8px] mr-[42%]"
         placeholder="Search transaction"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
       />
       <div className="flex items-center gap-2 relative  whitespace-nowrap">
         <p>Sort By</p>
         <button
           onClick={() => setIsSortOpen(!isSortOpen)}
-          className="mr-10 border px-4 py-2  rounded-[8px] whitespace-nowrap"
+          className="border px-4 py-2  rounded-[8px] whitespace-nowrap"
         >
           {selectedSort}
         </button>
@@ -70,7 +76,7 @@ const TransactionInput: React.FC<TransactionInputProps> = ({
         >
           {selectedCategory}
         </button>
-        <div className=" absolute bg-white z-30 top-[92%] left-[72px] border rounded-[8px]">
+        <div className="absolute bg-white z-30 top-[92%] left-[72px] border rounded-[8px]">
           {isCategoryOpen &&
             category.map((c, index) => (
               <div

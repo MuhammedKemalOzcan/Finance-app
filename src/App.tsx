@@ -4,6 +4,7 @@ import "./App.css";
 import Overview from "./Pages/Overview";
 import Sidebar from "./Pages/Sidebar";
 import Transaction from "./Pages/Transaction";
+import Pots from "./Pages/Pots";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Overview />} />
           <Route path="/transaction" element={<Transaction />} />
+          <Route path="/pots" element={<Pots />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -10,11 +10,17 @@ interface Transaction {
 
 interface Props {
   sortedData: Transaction[];
+  filteredData: Transaction[];
+  input: string;
 }
 
 const TransactionTable: React.FC<Props> = ({
   sortedData,
+  filteredData,
+  input,
 }) => {
+  const data = input.length >= 1 ? filteredData : sortedData;
+
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full table-auto text-left ">
@@ -27,7 +33,7 @@ const TransactionTable: React.FC<Props> = ({
           </tr>
         </thead>
         <tbody className="text-gray-700">
-          {sortedData.map((item, index) => (
+          {data.map((item, index) => (
             <tr key={index} className="border-b hover:bg-gray-50">
               <td className="px-4 py-3 flex items-center gap-2">
                 <img

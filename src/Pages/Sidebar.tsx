@@ -18,7 +18,7 @@ function Sidebar() {
       <div
         className={`${
           open === true
-            ? "bg-[#201F24] h-screen w-[300px] p-6 border border-[#201F24] rounded-r-[24px] flex flex-col justify-between "
+            ? "bg-[#201F24] h-full w-[300px] p-6 border border-[#201F24] rounded-r-[24px] flex flex-col justify-between "
             : "hidden"
         }`}
       >
