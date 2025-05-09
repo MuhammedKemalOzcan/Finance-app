@@ -61,18 +61,14 @@ function Transaction() {
 
   const pages: number = Math.ceil(filteredData.length / pageSize);
   const pageNumbers = Array.from({ length: pages }, (_, i) => i + 1);
-
-  console.log(pages);
-  console.log(input.length);
-  console.log("filteredData", filteredData);
-
+  
   sortedData = sortedData.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
 
   return (
-    <div className="w-screen h-screen px-10 py-8 bg-[#F8F4F0] flex flex-col gap-8 ">
+    <div className="w-full h-screen px-10 py-8 bg-[#F8F4F0] flex flex-col gap-8 ">
       <p className="text-1">Transaction</p>
       <div className="w-full h-full bg-white border border-white rounded-[12px] flex flex-col p-8 gap-8 box-border ">
         <TransactionInput

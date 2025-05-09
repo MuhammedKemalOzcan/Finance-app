@@ -23,7 +23,7 @@ function Overview() {
   const navigate = useNavigate();
   console.log(data);
   return (
-    <div className="w-screen h-screen px-10 py-8 bg-[#F8F4F0] flex flex-col gap-8 ">
+    <div className="w-full h-full px-10 py-8 bg-[#F8F4F0] flex flex-col gap-8 ">
       <p className="text-1"> Overview</p>
       {/* Balance */}
       <div className="flex gap-6">
