@@ -1,4 +1,3 @@
-import React from "react";
 import "../App.css";
 import data from "../data.json";
 import chart from "../Assets/Chart.svg";
@@ -21,7 +20,6 @@ interface Budget {
 
 function Overview() {
   const navigate = useNavigate();
-  console.log(data);
   return (
     <div className="w-full h-full px-10 py-8 bg-[#F8F4F0] flex flex-col gap-8 ">
       <p className="text-1"> Overview</p>
@@ -112,7 +110,7 @@ function Overview() {
                 index <= 4 && (
                   <div key={index} className="flex justify-between">
                     <div className="flex gap-2  items-center">
-                      <img src={transaction.avatar} />
+                      <img className="size-12 rounded-full" src={transaction.avatar} />
                       <p>{transaction.name}</p>
                     </div>
                     <div>

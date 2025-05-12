@@ -59,6 +59,8 @@ function Transaction() {
     item.name.toLowerCase().includes(input.toLowerCase())
   );
 
+  
+
   const pages: number = Math.ceil(filteredData.length / pageSize);
   const pageNumbers = Array.from({ length: pages }, (_, i) => i + 1);
   

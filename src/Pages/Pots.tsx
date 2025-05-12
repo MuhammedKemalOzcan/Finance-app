@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import data from "../data.json";
-import AddPot from "../Components/Transaction/Pots/AddPot";
-import Percentage from "../Components/Transaction/Pots/Percentage";
-import AddMoney from "../Components/Transaction/Pots/AddMoney";
-import WithdrawMoney from "../Components/Transaction/Pots/WithdrawMoney";
-import PotsOption from "../Components/Transaction/Pots/PotsOption";
+import AddPot from "../Components/Pots/AddPot";
+import Percentage from "../Components/Pots/Percentage";
+import AddMoney from "../Components/Pots/AddMoney";
+import WithdrawMoney from "../Components/Pots/WithdrawMoney";
+import PotsOption from "../Components/Pots/PotsOption";
 
 interface Pots {
   name: string;
