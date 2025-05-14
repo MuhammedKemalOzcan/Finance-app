@@ -25,7 +25,7 @@ function Pots() {
   const [width, setWidth] = useState(0);
   const [amountToAdd, setAmountToAdd] = useState<number>(0);
   const [amountToWithdraw, setAmountToWithdraw] = useState<number>(0);
-  const [potsData, setPotsData] = useState<Pots[]>(() => data.pots as Pots[]);
+  const [potsData, setPotsData] = useState<Pots[]>(data.pots);
   const [editingIndex, setEditingIndex] = useState<null | number>(null);
   const [potName, setPotName] = useState("");
   const [potTheme, setPotTheme] = useState("");
@@ -47,7 +47,7 @@ function Pots() {
     resizeObserver.observe(element);
 
     return () => resizeObserver.disconnect();
-  }, [isModalOpen, activeIndex]);
+  }, [isModalOpen, activeIndex, potsData]);
 
   return (
     <div className="w-screen h-auto px-10 py-8 bg-[#F8F4F0] flex flex-col gap-8">
@@ -77,6 +77,7 @@ function Pots() {
             <div className="flex justify-between relative">
               <div className="flex items-center gap-4">
                 <div
+                  style={{ backgroundColor: item.theme }}
                   className={`bg-[${item.theme}] size-4 rounded-full  `}
                 ></div>
                 <p className="text-2">{item.name}</p>

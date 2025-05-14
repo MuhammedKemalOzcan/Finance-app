@@ -161,7 +161,7 @@
       "avatar": "/public/images/avatars/spark-electric-solutions.jpg",
       "name": "Spark Electric Solutions",
       "category": "Bills",
-      "date": "2025-05-16T09:25:11Z",
+      "date": "2025-05-T09:25:11Z",
       "amount": -100.0,
       "recurring": true
     },
@@ -457,7 +457,90 @@
       "name": "Holiday",
       "target": 1440.0,
       "total": 531.0,
-      "theme": "#826CB0"
+      "theme": "#F16A70"
+    }
+  ],
+  "color": [
+    {
+      "id": 1,
+      "name": "Red",
+      "hex": "#FF0000"
+    },
+    {
+      "id": 2,
+
+      "name": "Green",
+      "hex": "#00FF00"
+    },
+    {
+      "id": 3,
+      "name": "Blue",
+      "hex": "#0000FF"
+    },
+    {
+      "id": 4,
+      "name": "Yellow",
+      "hex": "#FFFF00"
+    },
+    {
+      "id": 5,
+      "name": "Orange",
+      "hex": "#FFA500"
+    },
+    {
+      "id": 6,
+      "name": "Purple",
+      "hex": "#800080"
+    },
+    {
+      "id": 7,
+      "name": "Pink",
+      "hex": "#FFC0CB"
+    },
+    {
+      "id": 8,
+      "name": "Navy blue",
+      "hex": "#00008B"
+    },
+    {
+      "id": 9,
+      "name": "Gray",
+      "hex": "#808080"
+    },
+    {
+      "id": 10,
+      "name": "Black",
+      "hex": "#000000"
+    }
+  ],
+  "category": [
+    {
+      "id": 1,
+      "category": "Entertainment"
+    },
+    {
+      "id": 2,
+      "category": "Bills"
+    },
+    {
+      "id": 3,
+      "category": "Dining Out"
+    },
+    {
+      "id": 4,
+      "category": "Groceries"
+    },
+    {
+      "id": 5,
+      "category": "Transportation"
+    },
+    {
+      "id": 6,
+      "category": "Personal Care"
+    },
+    {
+      "id": 7,
+      "category": "Education"
     }
   ]
 }

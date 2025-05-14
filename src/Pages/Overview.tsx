@@ -20,6 +20,44 @@ interface Budget {
 
 function Overview() {
   const navigate = useNavigate();
+  const today = new Date();
+  const thirtyDaysAgo = new Date();
+  const fiveDaysRemain = new Date();
+  thirtyDaysAgo.setDate(today.getDate() - 30);
+  fiveDaysRemain.setDate(today.getDate() + 5);
+
+  const totalSaved = data.pots.reduce((acc, item) => {
+    return acc + item.total;
+  }, 0);
+
+  const paidBills = data.transactions.reduce((acc, item) => {
+    const itemDate = new Date(item.date);
+    if (item.recurring === true && itemDate <= today) {
+      return acc - item.amount;
+    }
+    return acc;
+  }, 0);
+
+  const upcomingBills = data.transactions.reduce((acc, item) => {
+    const itemDate = new Date(item.date);
+    if (item.recurring === true && itemDate >= today) {
+      return acc - item.amount;
+    }
+    return acc;
+  }, 0);
+
+  const dueSoon = data.transactions.reduce((acc, item) => {
+    const itemDate = new Date(item.date);
+    if (
+      item.recurring === true &&
+      itemDate >= today &&
+      itemDate <= fiveDaysRemain
+    ) {
+      return acc - item.amount;
+    }
+    return acc;
+  }, 0);
+
   return (
     <div className="w-full h-full px-10 py-8 bg-[#F8F4F0] flex flex-col gap-8 ">
       <p className="text-1"> Overview</p>
@@ -63,37 +101,27 @@ function Overview() {
                   </svg>
                   <div className="flex flex-col gap-2">
                     <p className="text-4 text-[#696868]">Total Saved</p>
-                    <p className="text-1">$850</p>
+                    <p className="text-1">${totalSaved}</p>
                   </div>
                 </div>
                 {/* savings */}
-                <div className="flex flex-col gap-3">
-                  <div className="flex gap-3">
-                    <span className="inline-flex h-[43px] w-[4px] items-center rounded-full text-sm font-medium bg-[#277C78] text-[#277C78]"></span>
-                    <div className="flex flex-col">
-                      <p className="text-5">Savings</p>
-                      <p className="text-4-bold">$159</p>
+                <div className="grid grid-cols-3 gap-4">
+                  {data.pots.map((item, index) => (
+                    <div key={index} className=" flex gap-3">
+                      <span
+                        style={{
+                          backgroundColor: item.theme,
+                          color: item.theme,
+                        }}
+                        className="inline-flex h-[43px] w-[4px] items-center rounded-full text-sm font-medium"
+                      ></span>
+                      <div className="flex flex-col">
+                        <p className="text-5 whitespace-nowrap ">{item.name}</p>
+                        <p className="text-4-bold">${item.total}</p>
+                      </div>
                     </div>
-                    <span className="inline-flex h-[43px] w-[4px] items-center rounded-full text-sm font-medium bg-[#F2CDAC] text-[#F2CDAC]"></span>
-                    <div className="flex flex-col">
-                      <p className="text-5">Gift</p>
-                      <p className="text-4-bold">$40</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <span className="inline-flex h-[43px] w-[4px] items-center rounded-full text-sm font-medium bg-[#626070] text-[#626070]"></span>
-                    <div className="flex flex-col">
-                      <p className="text-5">Concert Ticket</p>
-                      <p className="text-4-bold">$110</p>
-                    </div>
-                    <span className="inline-flex h-[43px] w-[4px] items-center rounded-full text-sm font-medium bg-[#82C9D7] text-[#82C9D7]"></span>
-                    <div className="flex flex-col">
-                      <p className="text-5">New Laptop</p>
-                      <p className="text-4-bold">$10</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-
                 {/* savings */}
               </div>
             </div>
@@ -110,7 +138,10 @@ function Overview() {
                 index <= 4 && (
                   <div key={index} className="flex justify-between">
                     <div className="flex gap-2  items-center">
-                      <img className="size-12 rounded-full" src={transaction.avatar} />
+                      <img
+                        className="size-12 rounded-full"
+                        src={transaction.avatar}
+                      />
                       <p>{transaction.name}</p>
                     </div>
                     <div>
@@ -140,14 +171,17 @@ function Overview() {
           <div className=" bg-white h-auto border border-white rounded-[12px] p-8 flex flex-col gap-5">
             <div className="flex justify-between">
               <p className="text-2">Budgets</p>
-              <button onClick={() => navigate("/budgets")} >See Details</button>
+              <button onClick={() => navigate("/budgets")}>See Details</button>
             </div>
             <div className="flex gap-4">
               <img src={chart} className="size-60" />
               <div className="flex flex-col gap-2 justify-center ">
                 {data.budgets.map((budget, index) => (
                   <div key={index} className="flex gap-4">
-                    <span className="h-[43px] w-[4px] items-center rounded-full text-sm font-medium bg-[#277C78] text-[#277C78]"></span>
+                    <span
+                      style={{ backgroundColor: budget.theme }}
+                      className="inline-flex h-[43px] w-[4px] items-center rounded-full text-sm font-medium"
+                    ></span>
                     <div className="flex flex-col">
                       <p>{budget.category}</p>
                       <p>${budget.maximum}</p>
@@ -167,15 +201,15 @@ function Overview() {
             <div className="flex flex-col gap-1">
               <div className="bg-[#F8F4F0] w-full h-[60px] border border-[#F8F4F0] rounded-[8px] p-4 flex justify-between ">
                 <p>Paid Bills</p>
-                <p>$190.00</p>
+                <p>${paidBills}</p>
               </div>
               <div className="bg-[#F8F4F0] w-full h-[60px] border border-[#F8F4F0] rounded-[8px] p-4 flex justify-between ">
-                <p>Paid Bills</p>
-                <p>$190.00</p>
+                <p>Total Upcoming</p>
+                <p>${upcomingBills}</p>
               </div>
               <div className="bg-[#F8F4F0] w-full h-[60px] border border-[#F8F4F0] rounded-[8px] p-4 flex justify-between ">
-                <p>Paid Bills</p>
-                <p>$190.00</p>
+                <p>Due Soon</p>
+                <p>${dueSoon}</p>
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import Sidebar from "./Pages/Sidebar";
 import Transaction from "./Pages/Transaction";
 import Pots from "./Pages/Pots";
 import Bills from "./Pages/Bills";
+import Budgets from "./Pages/Budgets";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/pots" element={<Pots />} />
           <Route path="/bills" element={<Bills />} />
+          <Route path="/budgets" element={<Budgets />} />
         </Routes>
       </div>
     </BrowserRouter>

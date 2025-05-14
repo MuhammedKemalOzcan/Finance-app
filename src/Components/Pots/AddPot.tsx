@@ -48,6 +48,9 @@ const AddPot: React.FC<Props> = ({
     setPotName("");
     setPotTarget(0);
   };
+
+  console.log(potsData);
+
   return (
     <div>
       <button onClick={() => setIsAddingPot(true)} className="button-black">
