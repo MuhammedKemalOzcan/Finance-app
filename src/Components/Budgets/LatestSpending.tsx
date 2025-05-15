@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 type Transaction = {
   avatar: string;
@@ -14,11 +15,19 @@ interface Props {
 }
 
 const LatestSpending: React.FC<Props> = ({ transaction, category }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full flex flex-col bg-[#F8F4F0] h-[300px] rounded-[12px] p-5 gap-5  ">
       <div className="flex justify-between ">
         <p className="text-3">Latest Spending</p>
-        <button>See All {">"}</button>
+        <button
+          onClick={() =>
+            navigate(`/transaction?category=${encodeURIComponent(category)}`)
+          }
+        >
+          See All {">"}
+        </button>
       </div>
       {transaction
         .filter((transaction) => transaction.category === category)

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import data from "../data.json";
 import TransactionInput from "../Components/Transaction/TransactionInput";
 import TransactionTable from "../Components/Transaction/TransactionTable";
 import TransactionPagination from "../Components/Transaction/TransactionPagination";
+import { useLocation } from "react-router-dom";
 
 function Transaction() {
   const [selectedSort, setSelectedSort] = useState("Latest");
@@ -26,6 +27,17 @@ function Transaction() {
     "Dining Out",
     "Transportation",
   ];
+
+  const query = new URLSearchParams(useLocation().search);
+  const categoryParams = query.get("category");
+
+
+  useEffect(() => {
+    if (categoryParams) {
+      setSelectedCategory(categoryParams);
+    }
+    setCurrentPage(1);
+  }, [categoryParams]);
 
   const pageSize = 10;
 
@@ -59,11 +71,9 @@ function Transaction() {
     item.name.toLowerCase().includes(input.toLowerCase())
   );
 
-  
-
   const pages: number = Math.ceil(filteredData.length / pageSize);
   const pageNumbers = Array.from({ length: pages }, (_, i) => i + 1);
-  
+
   sortedData = sortedData.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize

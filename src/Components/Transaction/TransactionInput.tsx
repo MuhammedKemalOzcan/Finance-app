@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface TransactionInputProps {
   isSortOpen: boolean;
@@ -29,6 +30,9 @@ const TransactionInput: React.FC<TransactionInputProps> = ({
   input,
   setInput,
 }) => {
+  const navigate = useNavigate();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const handleSort = (selectedSort: string) => {
     setSelectedSort(selectedSort);
     setIsSortOpen(false);
@@ -36,9 +40,27 @@ const TransactionInput: React.FC<TransactionInputProps> = ({
   const handleCategory = (selectedCategory: string) => {
     setSelectedCategory(selectedCategory);
     setIsCategoryOpen(false);
+    navigate(`/transaction?category=${selectedCategory}`);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsCategoryOpen(false);
+        setIsSortOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="flex justify-between ">
+    <div ref={dropdownRef} className="flex justify-between ">
       <input
         type="text"
         className="border flex gap-4 px-4 py-3 rounded-[8px] mr-[42%]"
@@ -54,7 +76,7 @@ const TransactionInput: React.FC<TransactionInputProps> = ({
         >
           {selectedSort}
         </button>
-        <div className="absolute bg-white z-30 top-12  right-8 border rounded-[8px]">
+        <div className="absolute bg-white z-30 top-12 -right-1 border rounded-[8px]">
           {isSortOpen &&
             sort.map((s, index) => (
               <div key={index} className="border-b flex justify-center">

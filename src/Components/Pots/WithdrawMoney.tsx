@@ -66,7 +66,7 @@ const WithdrawMoney: React.FC<Props> = ({
     if (
       activeIndex === index &&
       amountToWithdraw !== null &&
-      amountToWithdraw < total
+      amountToWithdraw <= total
     ) {
       const newPots = [...potsData];
       newPots[index] = {

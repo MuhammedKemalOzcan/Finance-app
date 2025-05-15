@@ -7,6 +7,8 @@ import Transaction from "./Pages/Transaction";
 import Pots from "./Pages/Pots";
 import Bills from "./Pages/Bills";
 import Budgets from "./Pages/Budgets";
+import data from "./data.json";
+import { useEffect, useState } from "react";
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
         <Sidebar />
         <Routes>
           <Route path="/" element={<Overview />} />
-          <Route path="/transaction" element={<Transaction />} />
+          <Route path={`/transaction`} element={<Transaction />} />
           <Route path="/pots" element={<Pots />} />
           <Route path="/bills" element={<Bills />} />
           <Route path="/budgets" element={<Budgets />} />

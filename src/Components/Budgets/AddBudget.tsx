@@ -16,6 +16,8 @@ interface Props {
   setNewCategory: (value: string) => void;
   selectedColor: string;
   setSelectedColor: (value: string) => void;
+  newMax: number;
+  setNewMax: (value: number) => void;
 }
 
 const AddBudget: React.FC<Props> = ({
@@ -27,6 +29,8 @@ const AddBudget: React.FC<Props> = ({
   setNewCategory,
   selectedColor,
   setSelectedColor,
+  newMax,
+  setNewMax,
 }) => {
   const handleClose = () => {
     setIsAdding(!isAdding);
@@ -36,7 +40,11 @@ const AddBudget: React.FC<Props> = ({
     setIsAdding(!isAdding);
     setBudget([
       ...budget,
-      { maximum: 0, category: newCategory, theme: selectedColor },
+      {
+        maximum: newMax,
+        category: newCategory,
+        theme: selectedColor,
+      },
     ]);
   };
 
@@ -87,15 +95,15 @@ const AddBudget: React.FC<Props> = ({
                 ))}
               </select>
             </div>
-            {/* <div>
-                <p>Maximum Spend</p>
-                <input
-                  value={spentAmount}
-                  onChange={(e) => setSpentAmount(Number(e.target.value))}
-                  type="text"
-                  className="w-full px-5 py-4 border rounded-[12px]"
-                />
-              </div> */}
+            <div>
+              <p>Maximum Spend</p>
+              <input
+                value={newMax}
+                onChange={(e) => setNewMax(Number(e.target.value))}
+                type="text"
+                className="w-full px-5 py-4 border rounded-[12px]"
+              />
+            </div>
             <div>
               <p>Theme</p>
               <select

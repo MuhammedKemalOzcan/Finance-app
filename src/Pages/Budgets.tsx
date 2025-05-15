@@ -67,8 +67,11 @@ function Budgets() {
       acc[category] = 0;
     }
     acc[category] -= transaction.amount;
+
     return acc;
   }, {} as Record<string, number>); //entertainment: number alacağını belirttik
+
+  console.log(spentByCategory);
 
   const openDropdown = (index: number) => {
     setIsOptionsOpen(!isOptionsOpen);
@@ -88,6 +91,8 @@ function Budgets() {
           setNewCategory={setNewCategory}
           selectedColor={selectedColor}
           setSelectedColor={setSelectedColor}
+          newMax={newMax}
+          setNewMax={setNewMax}
         />
       </div>
       <div className="flex gap-6 w-full">
@@ -95,7 +100,6 @@ function Budgets() {
         <div className="flex flex-col w-[70%] h-auto gap-6 ">
           {budget.map((item, index) => {
             spentAmount = spentByCategory[item.category] || 0;
-            console.log(item.category, spentAmount);
             return (
               <div
                 key={index}
